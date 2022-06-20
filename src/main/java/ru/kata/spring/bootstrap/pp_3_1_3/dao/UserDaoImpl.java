@@ -8,10 +8,9 @@ import ru.kata.spring.bootstrap.pp_3_1_3.entity.User;
 import ru.kata.spring.bootstrap.pp_3_1_3.repository.RoleRepository;
 import ru.kata.spring.bootstrap.pp_3_1_3.repository.UserRepository;
 
-
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Transactional
 @Repository
@@ -27,9 +26,12 @@ public class UserDaoImpl implements UserDao, UserDetailsService {
 
         roleRepository.save(new Role(1L,"ROLE_ADMIN"));
         roleRepository.save(new Role(2L,"ROLE_USER"));
-        userRepository.save(new User("admin","admin",35,"admin@mail.ru","{noop}admin", roleRepository.findById(1L).stream().collect(Collectors.toList())));
-        userRepository.save(new User("user","user",30,"user@mail.ru","{noop}user", roleRepository.findById(2L).stream().collect(Collectors.toList())));
-
+        List<Role> roleOne = new ArrayList<>();
+        roleOne.add(roleRepository.getReferenceById(1L));
+        List<Role> roleTwo = new ArrayList<>();
+        roleTwo.add(roleRepository.getReferenceById(2L));
+        userRepository.save(new User("admin","admin",35,"admin@mail.ru","{noop}admin", roleOne));
+        userRepository.save(new User("user","user",30,"user@mail.ru","{noop}user", roleTwo));
 
     }
 
@@ -52,7 +54,7 @@ public class UserDaoImpl implements UserDao, UserDetailsService {
 
     @Override
     public User getById(long id) {
-        return userRepository.getById(id);
+        return userRepository.getReferenceById(id);
     }
     @Override
     public void removeById(long id) {
@@ -66,7 +68,6 @@ public class UserDaoImpl implements UserDao, UserDetailsService {
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user =  userRepository.findByUsername(username);
-        return user;
+        return userRepository.findByUsername(username);
     }
 }

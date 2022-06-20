@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.bootstrap.pp_3_1_3.entity.Role;
 import ru.kata.spring.bootstrap.pp_3_1_3.entity.User;
-import ru.kata.spring.bootstrap.pp_3_1_3.repository.UserRepository;
 import ru.kata.spring.bootstrap.pp_3_1_3.service.UserService;
 
 import java.security.Principal;
@@ -18,7 +17,7 @@ public class AdminController {
     private final UserService userService;
 
     @Autowired
-    public AdminController(UserService userService, UserRepository userRepository) {
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
 
@@ -26,7 +25,6 @@ public class AdminController {
     public String welcomePage() {
         return "/index";
     }
-
 
 
     @GetMapping("/admin")

@@ -1,15 +1,12 @@
 package ru.kata.spring.bootstrap.pp_3_1_3.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.bootstrap.pp_3_1_3.dao.UserDao;
 import ru.kata.spring.bootstrap.pp_3_1_3.entity.User;
 import ru.kata.spring.bootstrap.pp_3_1_3.entity.Role;
 import ru.kata.spring.bootstrap.pp_3_1_3.repository.RoleRepository;
-import ru.kata.spring.bootstrap.pp_3_1_3.repository.UserRepository;
 
 
 import java.util.List;
@@ -18,12 +15,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     private final UserDao userDao;
-    private final RoleRepository roleRepository;
 
     @Autowired
     public UserServiceImpl(UserDao userDao, RoleRepository roleRepository) {
         this.userDao = userDao;
-        this.roleRepository = roleRepository;
     }
 
     @Override
